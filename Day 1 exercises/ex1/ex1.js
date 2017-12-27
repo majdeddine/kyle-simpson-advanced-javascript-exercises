@@ -1,4 +1,4 @@
-A();
+(function(){
 
 function C() {
 	console.log("OOPS!");
@@ -10,7 +10,7 @@ function E(f) {
 	var f = F;
 }
 
-var A = function() {
+function A () {
 	console.log("A");
 	B();
 };
@@ -21,7 +21,7 @@ function G() {
 	console.log("G");
 	H();
 
-	var H = function() {
+	function H() {
 		console.log("H");
 		I();
 	};
@@ -31,7 +31,7 @@ var D = d;
 
 function d() {
 	console.log("D");
-	E();
+	E(F);
 }
 
 function I() {
@@ -40,7 +40,7 @@ function I() {
 	J();
 }
 
-B = function() {
+function B () {
 	console.log("B");
 	C();
 };
@@ -50,14 +50,14 @@ var F = function() {
 	G();
 };
 
-var rest = "KLMNOPQRSTUVWXYZ".split("");
+var rest = "KLMNOPQRSTUVWXYZ".split(""); obj={}
 for (var i=0; i<rest.length; i++) {
 	(function(i){
 		// define the current function
-		window[rest[i]] = function() {
+		obj[rest[i]] = function() {
 			console.log(rest[i]);
 			if (i < (rest.length-1)) {
-				// TODO: call the next function
+				obj[rest[i+1]]();
 			}
 		};
 	})(i);
@@ -66,12 +66,14 @@ for (var i=0; i<rest.length; i++) {
 var J = function() {
 	J = function() {
 		console.log("J");
-		K();
+		obj.K();
 	};
 };
 
-C = function() {
+function C () {
 	console.log("C");
 	D();
 };
 
+return A;
+})()()
