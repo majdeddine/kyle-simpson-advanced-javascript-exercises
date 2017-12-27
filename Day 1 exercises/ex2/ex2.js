@@ -1,9 +1,5 @@
 // assume this data came from the database
-var notes = [
-	"This is the first note I've taken!",
-	"Now is the time for all good men to come to the aid of their country.",
-	"The quick brown fox jumped over the moon."
-];
+var NotesManager= (function(){
 
 function addNote(note) {
 	$("#notes").prepend(
@@ -96,5 +92,24 @@ function init() {
 	// listen for clicks on note elements
 	$("#notes").on("click",".note",handleNoteClick);
 }
+	function getData(data){
+		notes = data;
+	}
 
-$(document).ready(init);
+	var notes =[];
+
+	var api = {
+		init: init,
+		getData: getData
+	}
+	return api;
+
+})();
+
+NotesManager.getData([
+	"This is the first note I've taken!",
+	"Now is the time for all good men to come to the aid of their country.",
+	"The quick brown fox jumped over the moon."
+]);
+
+$(document).ready(NotesManager.init);
